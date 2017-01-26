@@ -4,16 +4,17 @@ import java.util.Random;
 
 public class PlayerCharacter {
 
-	public String name;
+	private String name;
 	private int str, dex, end, mag, tick;
 	public int tickCount;
 	
 	public void create (String charName) {
 	
 		Random rand = new Random();
-		setName(charName).setStr(rand.nextInt(255) + 1).setDex(rand.nextInt(255) + 1).setEnd(rand.nextInt(255) + 1).setMag(rand.nextInt(255) + 1);
+		this.setName(charName).setStr(rand.nextInt(255) + 1).setDex(rand.nextInt(255) + 1).setEnd(rand.nextInt(255) + 1).setMag(rand.nextInt(255) + 1);
 		
-		showStats();
+		this.showStats();
+			
 	}
 
 	public void showStats() {
