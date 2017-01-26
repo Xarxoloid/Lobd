@@ -5,7 +5,7 @@ import java.util.Random;
 public class PlayerCharacter {
 
 	public String name;
-	int str, dex, end, mag, tick;
+	private int str, dex, end, mag, tick;
 	
 	public void create (String charName) {
 	
