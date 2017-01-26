@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 public class lobd {
 	
-	final static int MAX_PLAYERS = 4;
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
 	
 	public static void main(String[] args) {

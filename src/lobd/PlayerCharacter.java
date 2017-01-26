@@ -6,6 +6,7 @@ public class PlayerCharacter {
 
 	public String name;
 	private int str, dex, end, mag, tick;
+	public int tickCount;
 	
 	public void create (String charName) {
 	
