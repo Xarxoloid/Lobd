@@ -6,6 +6,7 @@ public class PlayerCharacter {
 
 	private String name;
 	private int str, dex, end, mag, tick;
+	private double speedMod;
 	public int tickCount;
 	
 	public void create (String charName) {
@@ -25,6 +26,15 @@ public class PlayerCharacter {
 		System.out.println("Geschick:\t" + getDex());
 		System.out.println("Gesundheit:\t" + getEnd());
 		System.out.println("----------------------------------------------");
+	}
+	
+	/**
+	 * Calculates the current Speed Modifier using Modifies from Buffs/Debuffs. Doesn't change Dex.
+	 * Currently only sets it to 1.0
+	 * TODO: Actual Buff/Debuff System
+	 */
+	public void calculateSpeedMod() {
+		this.setSpeedMod(1.0);
 	}
 	
 	
@@ -77,6 +87,15 @@ public class PlayerCharacter {
 	}
 	public PlayerCharacter setTick(int tick) {
 		this.tick = tick;
+		return this;
+	}
+
+	public double getSpeedMod() {
+		return speedMod;
+	}
+
+	public PlayerCharacter setSpeedMod(double speedMod) {
+		this.speedMod = speedMod;
 		return this;
 	}
 }

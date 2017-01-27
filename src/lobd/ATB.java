@@ -11,7 +11,8 @@ public class ATB {
 		
 		lobd.characters.forEach(character->{
 			character.setTick(character.getTick() + 1);
-			if (character.getTick() == (256 - character.getDex())) {
+			character.calculateSpeedMod();
+			if (character.getTick() == (511 - (character.getDex() * character.getSpeedMod()))) {
 				System.out.println(character.getName() + ": TICK " + ++character.tickCount);
 				character.setTick(0);
 			}
