@@ -2,6 +2,7 @@ package lobd;
 
 import java.util.Scanner;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class lobd {
@@ -9,7 +10,7 @@ public class lobd {
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
 	public static Database savegame = new Database();
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, SQLException {
 		String[] cmd;
 		String scanned;
 		Scanner scan = new Scanner(System.in);
@@ -36,10 +37,8 @@ public class lobd {
 				}
 				break;
 			case "save":
-				savegame.saveToDisk();
 				break;
 			case "load":
-				savegame.readFromDisk();
 				break;
 			case "stop":
 				scan.close();

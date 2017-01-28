@@ -1,20 +1,36 @@
 package lobd;
 
-import java.util.Random;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 public class PlayerCharacter {
 
 	private String name;
-	private int str, dex, end, mag, tick;
+	private int str, dex, end, mag, tick, id;
 	private double speedMod;
 	public int tickCount;
 	
-	public void create (String charName) {
+	public void create (String charName) throws SQLException {
 	
-		Random rand = new Random();
-		this.setName(charName).setStr(rand.nextInt(255) + 1).setDex(rand.nextInt(255) + 1).setEnd(rand.nextInt(255) + 1).setMag(rand.nextInt(255) + 1);
-		
-		this.showStats();
+		if (lobd.savegame.checkDatabase("CHARACTERS")) {
+			HashMap<String, String> sql = new HashMap<String, String>();;
+			
+			sql.put("NAME", charName);
+			sql.put("STR", "5");
+			sql.put("DEX", "5");
+			sql.put("END", "5");
+			sql.put("MAG", "5");
+			sql.put("TICK", "0");
+			sql.put("SPEEDMOD", "1.0");
+			
+			if (lobd.savegame.add("CHARACTERS", sql)) {
+				System.out.println("Character " + charName + " was created.");
+			} else {
+				System.out.println("Character Creation failed.");
+			}
+		} else {
+			System.out.println("Character Creation failed.");
+		}
 			
 	}
 
@@ -96,6 +112,15 @@ public class PlayerCharacter {
 
 	public PlayerCharacter setSpeedMod(double speedMod) {
 		this.speedMod = speedMod;
+		return this;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public PlayerCharacter setId(int id) {
+		this.id = id;
 		return this;
 	}
 }
