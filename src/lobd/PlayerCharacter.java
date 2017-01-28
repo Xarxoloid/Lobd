@@ -27,7 +27,7 @@ public class PlayerCharacter {
 		System.out.println("Gesundheit:\t" + getEnd());
 		System.out.println("----------------------------------------------");
 	}
-	
+
 	/**
 	 * Calculates the current Speed Modifier using Modifies from Buffs/Debuffs. Doesn't change Dex.
 	 * Currently only sets it to 1.0

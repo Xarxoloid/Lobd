@@ -1,13 +1,15 @@
 package lobd;
 
 import java.util.Scanner;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class lobd {
 	
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
+	public static Database savegame = new Database();
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		String[] cmd;
 		String scanned;
 		Scanner scan = new Scanner(System.in);
@@ -32,6 +34,12 @@ public class lobd {
 					ATB.doTick();
 					i++;
 				}
+				break;
+			case "save":
+				savegame.saveToDisk();
+				break;
+			case "load":
+				savegame.readFromDisk();
 				break;
 			case "stop":
 				scan.close();
