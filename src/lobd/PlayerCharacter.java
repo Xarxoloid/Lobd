@@ -3,13 +3,23 @@ package lobd;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * All Playable Characters. Stored in SQLite.
+ */
 @DatabaseTable(tableName = "characters")
 public class PlayerCharacter {
 	
+	/**
+	 * Empty Constructor, needed for ORMLite
+	 */
 	public PlayerCharacter() {
 		
 	}
 	
+	/**
+	 * Creates a new Characters with default Values.
+	 * @param name Character Name
+	 */
 	public PlayerCharacter(String name) {
 		setName(name);
 		setStr(5);
@@ -43,9 +53,10 @@ public class PlayerCharacter {
 	
 	@DatabaseField(canBeNull = false, useGetSet = true)
 	private double speedMod;
-	
-	public int tickCount;
 
+	/**
+	 * Prints the Characters Stats into the Console
+	 */
 	public void showStats() {
 		System.out.println("----------------------------------------------");
 		System.out.println("Name:\t\t" + getName() + "(" + getId() + ")");
@@ -56,9 +67,6 @@ public class PlayerCharacter {
 		System.out.println("----------------------------------------------");
 	}
 
-	public void create() {
-		
-	}
 	/**
 	 * Calculates the current Speed Modifier using Modifies from Buffs/Debuffs. Doesn't change Dex.
 	 * Currently only sets it to 1.0
