@@ -1,6 +1,13 @@
 package lobd;
 
 import java.util.Scanner;
+
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,9 +15,19 @@ import java.util.ArrayList;
 public class lobd {
 	
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
-	private static Database db = new Database();
 	
 	public static void main(String[] args) throws IOException, SQLException {
+		
+		// Database Setup Block
+		// create a connection source to our database
+        String databaseUrl = "jdbc:sqlite:save/test.db";
+        ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
+        // Setting up Data Access Objects (Dao's)
+        Dao<PlayerCharacter, String> accountDao = DaoManager.createDao(connectionSource, PlayerCharacter.class);
+        // Creating Tables if not present
+        TableUtils.createTableIfNotExists(connectionSource, PlayerCharacter.class);
+        // End of Database Setup Block
+        
 		String[] cmd;
 		String scanned;
 		Scanner scan = new Scanner(System.in);
@@ -26,8 +43,9 @@ public class lobd {
 					characters.get(Integer.parseInt(cmd[1])).showStats();
 					break;
 				case "createChar":
-					characters.add(new PlayerCharacter());
-					characters.get(characters.size() - 1).create(cmd[1]);
+					PlayerCharacter nC = new PlayerCharacter(cmd[1]);
+					accountDao.create(nC);
+					nC.showStats();
 					break;
 				case "doTick":
 					int i = 0;
@@ -39,11 +57,12 @@ public class lobd {
 				case "save":
 					break;
 				case "load":
-					characters.add(new PlayerCharacter());
-					characters.get(characters.size() - 1).load(Integer.parseInt(cmd[1]));
+					characters.add(accountDao.queryForId(cmd[1]));
+					characters.get(characters.size() - 1).showStats();
 					break;
 				case "stop":
 					scan.close();
+					connectionSource.close();
 					break outerloop;
 				default:
 					System.out.println("Unbekannter Befehl");
