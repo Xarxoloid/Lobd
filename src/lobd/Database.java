@@ -4,11 +4,10 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Optional;
 
 /**
  * Parent Database Class. Handles all the Connection stuff with the SQLite Database
- * @author Xarxas
+ * TODO: Replace with http://ormlite.com/javadoc/ormlite-core/doc-files/ormlite_toc.html#SEC_Contents
  */
 public class Database {
 
@@ -80,16 +79,16 @@ public class Database {
 	 * @param fields (Optional) Fields to get (defaults to *)
 	 * @return ResultSet matching the Query
 	 */
-	public static ResultSet get(String table, Optional<String> condition, Optional<String> fields) {
+	public static ResultSet get(String table, String condition, String fields) {
 		
-		String sql = "SELECT " + (fields.isPresent() ? "(" + fields + ")": "*") + " FROM " + table + (condition.isPresent() ? "WHERE " + condition:"") + ";";
+		String sql = "SELECT " + (fields != null ? "(" + fields + ")": "*") + " FROM " + table + (condition != null ? " WHERE " + condition:"") + ";";
 		
+		System.out.println(sql);
 		ResultSet rs = null;
 		try {
 			Statement stmt = c.createStatement();
 			rs = stmt.executeQuery(sql);
 			stmt.close();
-			c.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

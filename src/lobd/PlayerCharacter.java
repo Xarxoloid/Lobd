@@ -33,6 +33,19 @@ public class PlayerCharacter {
 		}
 			
 	}
+	
+	public void load(int id) throws SQLException {
+		HashMap<String, String> data = DatabasePlayerCharacter.getById(id);
+		System.out.println(data.toString());
+//		setName(data.get("NAME"));
+//		setStr(Integer.parseInt(data.get("STR")));
+//		setDex(Integer.parseInt(data.get("DEX")));
+//		setEnd(Integer.parseInt(data.get("END")));
+//		setMag(Integer.parseInt(data.get("MAG")));
+//		setTick(Integer.parseInt(data.get("TICK")));
+//		setSpeedMod(Double.parseDouble(data.get("SPEEDMOD")));
+		showStats();
+	}
 
 	public void showStats() {
 		System.out.println("----------------------------------------------");

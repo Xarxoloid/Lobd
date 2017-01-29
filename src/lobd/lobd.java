@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class lobd {
 	
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
+	private static Database db = new Database();
 	
 	public static void main(String[] args) throws IOException, SQLException {
 		String[] cmd;
@@ -21,29 +22,31 @@ public class lobd {
 			scanned = scan.nextLine();
 			cmd = scanned.split("\\s+");
 			switch (cmd[0]) {
-			case "showStats":
-				characters.get(Integer.parseInt(cmd[1])).showStats();
-				break;
-			case "createChar":
-				characters.add(new PlayerCharacter());
-				characters.get(characters.size() - 1).create(cmd[1]);
-				break;
-			case "doTick":
-				int i = 0;
-				while (i < 1000) {
-					ATB.doTick();
-					i++;
-				}
-				break;
-			case "save":
-				break;
-			case "load":
-				break;
-			case "stop":
-				scan.close();
-				break outerloop;
-			default:
-				System.out.println("Unbekannter Befehl");
+				case "showStats":
+					characters.get(Integer.parseInt(cmd[1])).showStats();
+					break;
+				case "createChar":
+					characters.add(new PlayerCharacter());
+					characters.get(characters.size() - 1).create(cmd[1]);
+					break;
+				case "doTick":
+					int i = 0;
+					while (i < 1000) {
+						ATB.doTick();
+						i++;
+					}
+					break;
+				case "save":
+					break;
+				case "load":
+					characters.add(new PlayerCharacter());
+					characters.get(characters.size() - 1).load(Integer.parseInt(cmd[1]));
+					break;
+				case "stop":
+					scan.close();
+					break outerloop;
+				default:
+					System.out.println("Unbekannter Befehl");
 			}
 		}
 	}
