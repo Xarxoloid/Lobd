@@ -1,34 +1,31 @@
 package lobd;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+/**
+ * Parent Database Class. Handles all the Connection stuff with the SQLite Database
+ * @author Xarxas
+ */
 public class Database {
 
-	private Connection c = null;
+	private static Connection c = null;
 	
+	/**
+	 * Database Constructor
+	 * Establishes the Database Connection, checks for Missing Databases and creates them via subClasses
+	 */
 	public Database() {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		    c = DriverManager.getConnection("jdbc:sqlite:save/test.db");
 		    c.setAutoCommit(false);
 		    
-		    if (!checkDatabase("CHARACTERS")) {
-		    	List<String> sql = new ArrayList<String>();
-		    	sql.add("ID INTEGER PRIMARY KEY AUTOINCREMENT");
-		    	sql.add("NAME TEXT NOT NULL");
-		    	sql.add("STR INT NOT NULL");
-		    	sql.add("DEX INT NOT NULL");
-		    	sql.add("END INT NOT NULL");
-		    	sql.add("MAG INT NOT NULL");
-		    	sql.add("TICK INT NOT NULL");
-		    	sql.add("SPEEDMOD DOUBLE NOT NULL");
-		    	
-		    	create("CHARACTERS", sql);
+		    if (!checkForTable("CHARACTERS")) {
+		    	DatabasePlayerCharacter.create();
 		    }
 	    } catch ( Exception e ) {
 	        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -37,7 +34,13 @@ public class Database {
 	    System.out.println("Opened database successfully");
 	}
 	
-	public boolean create(String table, List<String> options) {
+	/**
+	 * Creates a Table inside the Database
+	 * @param table Table Name (eg. CHARACTERS)
+	 * @param options List<String> of Options (eg. DEX INT NOT NULL)
+	 * @return true or false (should throw error)
+	 */
+	public static boolean createTable(String table, List<String> options) {
 		
 		String sql = "";
 		
@@ -50,7 +53,13 @@ public class Database {
 		return execute(sql);
 	}
 	
-	public boolean add(String table, HashMap<String, String> data ) {
+	/**
+	 * Adds One row of Data into the specified table
+	 * @param table Table Name
+	 * @param data Data to Insert (format for hash: (field) key, (value) value))
+	 * @return true of false (should throw error)
+	 */
+	public static boolean add(String table, HashMap<String, String> data ) {
 		
 		String key = "", value = "";
 		
@@ -64,7 +73,14 @@ public class Database {
 		return execute(sql);
 	}
 	
-	public ResultSet get(String table, Optional<String> condition, Optional<String> fields) {
+	/**
+	 * Gets One ResultSet from the Database
+	 * @param table Table to get Data from
+	 * @param condition (Optional) Condition that has to be met
+	 * @param fields (Optional) Fields to get (defaults to *)
+	 * @return ResultSet matching the Query
+	 */
+	public static ResultSet get(String table, Optional<String> condition, Optional<String> fields) {
 		
 		String sql = "SELECT " + (fields.isPresent() ? "(" + fields + ")": "*") + " FROM " + table + (condition.isPresent() ? "WHERE " + condition:"") + ";";
 		
@@ -81,13 +97,38 @@ public class Database {
 		
 	}
 	
-	public boolean update(String table, String condition, String key, String value) {
+	/**
+	 * Updates one Key/Value pair, that matches the condition
+	 * @param table Table to Update Data in
+	 * @param condition Condition that has to be met
+	 * @param key Column that will be updated
+	 * @param value New Value for specified Column
+	 * @return true or false (should throw error)
+	 */
+	public static boolean update(String table, String condition, String key, String value) {
 		String sql = "UPDATE " + table + " set " + key + " = " + value + " where " + condition;
 		
 		return execute(sql);
 	}
 	
-	private boolean execute(String sql) {
+	/**
+	 * Deletes everything that meets the condition. Can not be used to DROP tables
+	 * @param table Table to delete Data from
+	 * @param condition Condition that has to be met
+	 * @return true or false (should throw error)
+	 */
+	public static boolean del(String table, String condition) {
+		String sql = "DELETE from " + table + " where " + condition;
+		
+		return execute(sql);
+	}
+	
+	/**
+	 * Executes given sql String
+	 * @param sql String that will be executed inside the Database (NO Statement Object)
+	 * @return true or false (should throw error)
+	 */
+	private static boolean execute(String sql) {
 		try {
 			Statement stmt = c.createStatement();
 			stmt.executeUpdate(sql);
@@ -100,9 +141,15 @@ public class Database {
 		}
 	}
 	
-	public boolean checkDatabase(String db) throws SQLException {
+	/**
+	 * Checks if specified table exists
+	 * @param db Table to check for
+	 * @return true or false
+	 * @throws SQLException
+	 */
+	public static boolean checkForTable(String table) throws SQLException {
 		DatabaseMetaData dbmd = c.getMetaData();
-		ResultSet checkTables = dbmd.getTables(null, null, db, null);
+		ResultSet checkTables = dbmd.getTables(null, null, table, null);
 		
 		if (checkTables.next()) {
 			return true;

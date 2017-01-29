@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class lobd {
 	
 	public static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
-	public static Database savegame = new Database();
 	
 	public static void main(String[] args) throws IOException, SQLException {
 		String[] cmd;

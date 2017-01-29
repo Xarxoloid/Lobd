@@ -12,7 +12,7 @@ public class PlayerCharacter {
 	
 	public void create (String charName) throws SQLException {
 	
-		if (lobd.savegame.checkDatabase("CHARACTERS")) {
+		if (Database.checkForTable("CHARACTERS")) {
 			HashMap<String, String> sql = new HashMap<String, String>();;
 			
 			sql.put("NAME", charName);
@@ -23,7 +23,7 @@ public class PlayerCharacter {
 			sql.put("TICK", "0");
 			sql.put("SPEEDMOD", "1.0");
 			
-			if (lobd.savegame.add("CHARACTERS", sql)) {
+			if (Database.add("CHARACTERS", sql)) {
 				System.out.println("Character " + charName + " was created.");
 			} else {
 				System.out.println("Character Creation failed.");
