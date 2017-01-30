@@ -13,7 +13,7 @@ public class ATB {
 			character.setTick(character.getTick() + 1);
 			character.calculateSpeedMod();
 			if (character.getTick() == (511 - Math.round((character.getDex() * character.getSpeedMod())))) {
-				System.out.println(character.getName() + ": TICK " + ++character.tickCount);
+				System.out.println(character.getName() + ": TICK ");
 				character.setTick(0);
 			}
 			
