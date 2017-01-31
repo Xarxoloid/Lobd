@@ -9,7 +9,7 @@ public class ATB {
 	 */
 	public static void doTick() {
 		
-		lobd.characters.forEach(character->{
+		lobd.getCharacters().forEach(character->{
 			character.setTick(character.getTick() + 1);
 			character.calculateSpeedMod();
 			if (character.getTick() == (511 - Math.round((character.getDex() * character.getSpeedMod())))) {
