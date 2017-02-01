@@ -24,4 +24,13 @@ public class Combat {
 			System.out.println("Name " + enemy.getName());
 		});
 	}
+	
+	public void fight() {
+		
+		int i = 0;
+		while (i < 100000) {
+			ATB.doTick();
+			i++;
+		}
+	}
 }

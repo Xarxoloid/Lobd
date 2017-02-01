@@ -1,5 +1,6 @@
 package lobd;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -30,6 +31,9 @@ public class PlayerCharacter {
 		setSpeedMod(1.0);
 	}
 
+	
+	public int tickCount = 0;
+	
 	@DatabaseField(generatedId = true, useGetSet = true)
 	private int id;
 	
@@ -53,6 +57,37 @@ public class PlayerCharacter {
 	
 	@DatabaseField(canBeNull = false, useGetSet = true)
 	private double speedMod;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int currLvl;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int tempo;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int spirit;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int currHp;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int luck;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int armor;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int mArmor;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int currXP;
+	
+	@DatabaseField(canBeNull = false, useGetSet = true)
+	private int job;
+	
+	@DatabaseField(canBeNull = true, useGetSet = true, dataType = DataType.SERIALIZABLE)
+	private Status status;
+	
 
 	/**
 	 * Prints the Characters Stats into the Console
@@ -186,5 +221,145 @@ public class PlayerCharacter {
 	 */
 	public void setSpeedMod(double speedMod) {
 		this.speedMod = speedMod;
+	}
+
+	/**
+	 * @return the currLvl
+	 */
+	public int getCurrLvl() {
+		return currLvl;
+	}
+
+	/**
+	 * @param currLvl the currLvl to set
+	 */
+	public void setCurrLvl(int currLvl) {
+		this.currLvl = currLvl;
+	}
+
+	/**
+	 * @return the tempo
+	 */
+	public int getTempo() {
+		return tempo;
+	}
+
+	/**
+	 * @param tempo the tempo to set
+	 */
+	public void setTempo(int tempo) {
+		this.tempo = tempo;
+	}
+
+	/**
+	 * @return the spirit
+	 */
+	public int getSpirit() {
+		return spirit;
+	}
+
+	/**
+	 * @param spirit the spirit to set
+	 */
+	public void setSpirit(int spirit) {
+		this.spirit = spirit;
+	}
+
+	/**
+	 * @return the currHp
+	 */
+	public int getCurrHp() {
+		return currHp;
+	}
+
+	/**
+	 * @param currHp the currHp to set
+	 */
+	public void setCurrHp(int currHp) {
+		this.currHp = currHp;
+	}
+
+	/**
+	 * @return the luck
+	 */
+	public int getLuck() {
+		return luck;
+	}
+
+	/**
+	 * @param luck the luck to set
+	 */
+	public void setLuck(int luck) {
+		this.luck = luck;
+	}
+
+	/**
+	 * @return the armor
+	 */
+	public int getArmor() {
+		return armor;
+	}
+
+	/**
+	 * @param armor the armor to set
+	 */
+	public void setArmor(int armor) {
+		this.armor = armor;
+	}
+
+	/**
+	 * @return the mArmor
+	 */
+	public int getMArmor() {
+		return mArmor;
+	}
+
+	/**
+	 * @param mArmor the mArmor to set
+	 */
+	public void setMArmor(int mArmor) {
+		this.mArmor = mArmor;
+	}
+
+	/**
+	 * @return the currXP
+	 */
+	public int getCurrXP() {
+		return currXP;
+	}
+
+	/**
+	 * @param currXP the currXP to set
+	 */
+	public void setCurrXP(int currXP) {
+		this.currXP = currXP;
+	}
+
+	/**
+	 * @return the job
+	 */
+	public int getJob() {
+		return job;
+	}
+
+	/**
+	 * @param job the job to set
+	 */
+	public void setJob(int job) {
+		this.job = job;
+	}
+
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 }

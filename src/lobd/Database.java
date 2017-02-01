@@ -12,6 +12,7 @@ public class Database {
 
 	private Dao<PlayerCharacter, String> playerCharacterDao = null;
 	private Dao<Enemy, String> enemyDao = null;
+	private Dao<Status, String> statusDao = null;
 	
 	Database() throws SQLException {
 		// Database Setup Block
@@ -21,9 +22,11 @@ public class Database {
         // Setting up Data Access Objects (Dao's)
         this.setPlayerCharacterDao(DaoManager.createDao(connectionSource, PlayerCharacter.class));
         this.setEnemyDao(DaoManager.createDao(connectionSource, Enemy.class));
+        this.setStatusDao(DaoManager.createDao(connectionSource, Status.class));
         // Creating Tables if not present
         TableUtils.createTableIfNotExists(connectionSource, PlayerCharacter.class);
         TableUtils.createTableIfNotExists(connectionSource, Enemy.class);
+        TableUtils.createTableIfNotExists(connectionSource, Status.class);
         // End of Database Setup Block
 	}
 
@@ -53,6 +56,20 @@ public class Database {
 	 */
 	public void setEnemyDao(Dao<Enemy, String> enemyDao) {
 		this.enemyDao = enemyDao;
+	}
+
+	/**
+	 * @return the statusDao
+	 */
+	public Dao<Status, String> getStatusDao() {
+		return statusDao;
+	}
+
+	/**
+	 * @param statusDao the statusDao to set
+	 */
+	public void setStatusDao(Dao<Status, String> statusDao) {
+		this.statusDao = statusDao;
 	}
 			
 }

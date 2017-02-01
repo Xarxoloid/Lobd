@@ -1,5 +1,7 @@
 package lobd;
 
+import java.sql.SQLException;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -13,13 +15,7 @@ public class Enemy {
 		
 	}
 	
-	/**
-	 * Loads Enemy from Database with given ID
-	 * @param id Enemy ID
-	 */
-	public Enemy(int id) {
-		
-	}
+	public int tickCount = 0;
 	
 	@DatabaseField(generatedId = true, useGetSet = true)
 	private int id;

@@ -27,32 +27,30 @@ public class lobd {
 				case "showStats":
 					lobd.getCharacters().get(Integer.parseInt(cmd[1])).showStats();
 					break;
-				case "showEnemys":
+				case "simFight":
 					ArrayList<Integer> enemyIds = new ArrayList<Integer>();
 					enemyIds.add(1);
+					enemyIds.add(2);
 					Combat combat = new Combat(enemyIds);
-					combat.prepare();
+					combat.fight();
 					break;
 				case "createChar":
 					PlayerCharacter nC = new PlayerCharacter(cmd[1]);
 					db.getPlayerCharacterDao().create(nC);
 					nC.showStats();
 					break;
-				case "doTick":
-					int i = 0;
-					long start = System.currentTimeMillis();
-					while (i < 1000000) {
-						ATB.doTick();
-						i++;
-					}
-					long end = System.currentTimeMillis();
-					System.out.println("Verstrichene Zeit: " + (end - start) + "ms");
-					break;
-				case "save":
-					break;
 				case "load":
 					lobd.getCharacters().add(db.getPlayerCharacterDao().queryForId(cmd[1]));
 					lobd.getCharacters().get(getCharacters().size() - 1).showStats();
+					lobd.getCharacters().get(getCharacters().size() - 1).getStatus().addStatus(db.getStatusDao().queryForId("1"));
+					System.out.println("Status: " + lobd.getCharacters().get(getCharacters().size() - 1).getStatus().status.get(0).getName());
+					break;
+				case "status":
+					Status s = new Status();
+					PlayerCharacter p = new PlayerCharacter();
+					p = db.getPlayerCharacterDao().queryForId("1");
+					p.setStatus(s);
+					db.getPlayerCharacterDao().update(p);
 					break;
 				case "stop":
 					scan.close();
