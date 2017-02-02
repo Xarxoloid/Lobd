@@ -2,15 +2,17 @@ package lobd;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Combat {
 	
-	public static ArrayList<Enemy> enemys = new ArrayList<Enemy>();
+	private static HashMap<Integer, Enemy> enemys = new HashMap<Integer, Enemy>();
 	
 	Combat(ArrayList<Integer> enemyIds) {
 		enemyIds.forEach(enemy->{
 			try {
-				enemys.add(lobd.getDb().getEnemyDao().queryForId(String.valueOf(enemy)));
+				Enemy temp = LobdApp.getDb().getEnemyDao().queryForId(String.valueOf(enemy));
+				enemys.put((enemys.size() + 1), temp);
 				System.out.println("Enemy Added");
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -19,10 +21,6 @@ public class Combat {
 	}
 	
 	public void prepare() {
-		System.out.println("List all Enemys:");
-		enemys.forEach(enemy->{
-			System.out.println("Name " + enemy.getName());
-		});
 	}
 	
 	public void fight() {
@@ -32,5 +30,19 @@ public class Combat {
 			ATB.doTick();
 			i++;
 		}
+	}
+
+	/**
+	 * @return the enemys
+	 */
+	public static HashMap<Integer, Enemy> getEnemys() {
+		return enemys;
+	}
+
+	/**
+	 * @param enemys the enemys to set
+	 */
+	public static void setEnemys(HashMap<Integer, Enemy> enemys) {
+		Combat.enemys = enemys;
 	}
 }

@@ -1,5 +1,7 @@
 package lobd;
 
+import java.util.Map;
+
 public class ATB {
 	
 	/**
@@ -7,24 +9,22 @@ public class ATB {
 	 */
 	public static void doTick() {
 		
-		lobd.getCharacters().forEach(character->{
-			character.setTick(character.getTick() + 1);
-			character.calculateSpeedMod();
-			if (character.getTick() == (511 - Math.round((character.getDex() * character.getSpeedMod())))) {
-				System.out.println(character.getName() + ": TICK " + ++character.tickCount);
-				character.setTick(0);
+		for(Map.Entry<Integer, PlayerCharacter> entry : LobdApp.getCharacters().entrySet()) {
+			entry.getValue().setTick(entry.getValue().getTick() + 1);
+			entry.getValue().calculateSpeedMod();
+			if (entry.getValue().getTick() == (511 - Math.round((entry.getValue().getTempo() * entry.getValue().getSpeedMod())))) {
+				System.out.println(entry.getValue().getName() + ": TICK " + ++entry.getValue().tickCount);
+				entry.getValue().setTick(0);
 			}
-			
-		});
+		}
 		
-		Combat.enemys.forEach(enemy->{
-			enemy.setTick(enemy.getTick() + 1);
-			enemy.calculateSpeedMod();
-			if (enemy.getTick() == (511 - Math.round((enemy.getDex() * enemy.getSpeedMod())))) {
-				System.out.println(enemy.getName() + ": TICK " + ++enemy.tickCount);
-				enemy.setTick(0);
+		for(Map.Entry<Integer, Enemy> entry : Combat.getEnemys().entrySet()) {
+			entry.getValue().setTick(entry.getValue().getTick() + 1);
+			entry.getValue().calculateSpeedMod();
+			if (entry.getValue().getTick() == (511 - Math.round((entry.getValue().getDex() * entry.getValue().getSpeedMod())))) {
+				System.out.println(entry.getValue().getName() + ": TICK " + ++entry.getValue().tickCount);
+				entry.getValue().setTick(0);
 			}
-		});
+		}
 	}
-
 }

@@ -5,10 +5,11 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class lobd {
+public class LobdApp {
 	
-	private static ArrayList<PlayerCharacter> characters = new ArrayList<PlayerCharacter>();
+	private static HashMap<Integer, PlayerCharacter> characters = new HashMap<Integer, PlayerCharacter>();
 	private static Database db = null;
 	
 	public static void main(String[] args) throws IOException, SQLException {
@@ -16,7 +17,7 @@ public class lobd {
 		String[] cmd;
 		String scanned;
 		Scanner scan = new Scanner(System.in);
-		lobd.setDb(new Database());
+		LobdApp.setDb(new Database());
 		
 		outerloop:
 		while (true) {
@@ -25,7 +26,7 @@ public class lobd {
 			cmd = scanned.split("\\s+");
 			switch (cmd[0]) {
 				case "showStats":
-					lobd.getCharacters().get(Integer.parseInt(cmd[1])).showStats();
+					LobdApp.getCharacters().get(Integer.parseInt(cmd[1])).showStats();
 					break;
 				case "simFight":
 					ArrayList<Integer> enemyIds = new ArrayList<Integer>();
@@ -40,10 +41,9 @@ public class lobd {
 					nC.showStats();
 					break;
 				case "load":
-					lobd.getCharacters().add(db.getPlayerCharacterDao().queryForId(cmd[1]));
-					lobd.getCharacters().get(getCharacters().size() - 1).showStats();
-					lobd.getCharacters().get(getCharacters().size() - 1).getStatus().addStatus(db.getStatusDao().queryForId("1"));
-					System.out.println("Status: " + lobd.getCharacters().get(getCharacters().size() - 1).getStatus().status.get(0).getName());
+					PlayerCharacter temp = db.getPlayerCharacterDao().queryForId(cmd[1]);
+					LobdApp.getCharacters().put(temp.getId(), temp);
+					LobdApp.getCharacters().get(1).showStats();
 					break;
 				case "status":
 					Status s = new Status();
@@ -64,15 +64,15 @@ public class lobd {
 	/**
 	 * @return the characters
 	 */
-	public static ArrayList<PlayerCharacter> getCharacters() {
+	public static HashMap<Integer, PlayerCharacter> getCharacters() {
 		return characters;
 	}
 
 	/**
 	 * @param characters the characters to set
 	 */
-	public static void setCharacters(ArrayList<PlayerCharacter> characters) {
-		lobd.characters = characters;
+	public static void setCharacters(HashMap<Integer, PlayerCharacter> characters) {
+		LobdApp.characters = characters;
 	}
 
 	/**
@@ -86,6 +86,6 @@ public class lobd {
 	 * @param db the db to set
 	 */
 	public static void setDb(Database db) {
-		lobd.db = db;
+		LobdApp.db = db;
 	}
 }

@@ -85,7 +85,7 @@ public class PlayerCharacter {
 	@DatabaseField(canBeNull = false, useGetSet = true)
 	private int job;
 	
-	@DatabaseField(canBeNull = true, useGetSet = true, dataType = DataType.SERIALIZABLE)
+	@DatabaseField(canBeNull = false, useGetSet = true, dataType = DataType.SERIALIZABLE)
 	private Status status;
 	
 
